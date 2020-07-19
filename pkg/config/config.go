@@ -24,7 +24,7 @@ type Config struct {
 		Name             string   `yaml:"name"`
 		Type             string   `yaml:"type"`
 		Subtype          string   `yaml:"subtype"`
-		ConnectionString string   `yaml:"connectionString"`
+		ConnectionString string   `yaml:"connectionStringFromEnv"`
 		Metrics          []Metric `yaml:"metrics"`
 	} `yaml:"connections"`
 }

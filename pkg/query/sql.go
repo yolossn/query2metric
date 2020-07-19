@@ -3,6 +3,7 @@ package query
 import (
 	"database/sql"
 	"fmt"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
@@ -17,8 +18,11 @@ type sqlQuery struct {
 }
 
 func NewSQLQuery(connnectionURL string) (CountQuery, error) {
-
-	db, err := dburl.Open(connnectionURL)
+	connnectionString := os.Getenv(connnectionURL)
+	if connnectionString == "" {
+		return nil, errors.New("connnectionString is empty")
+	}
+	db, err := dburl.Open(connnectionString)
 	if err != nil {
 		return nil, errors.Wrap(err, "Error in establishing connection to db")
 	}

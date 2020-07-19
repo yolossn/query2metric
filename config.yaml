@@ -1,15 +1,15 @@
 connections:
   - name: mongodb1
     type: MONGO
-    connectionString: MONGO_CONN
+    connectionStringFromEnv: MONGO_CONN
     metrics:
-      - name: user_count
+      - name: active_user_count
         helpString: users in the product
         database: yolo_db
         collection: user
         query: '{"is_active":true}'
         time: 60
-      - name: user_count1
+      - name: total_user_count
         helpString: users in the product
         database: yolo_db
         collection: user
@@ -17,9 +17,9 @@ connections:
         time: 120
   - name: postgres1
     type: SQL
-    connectionString: POSTGRES_CONN
+    connectionStringFromEnv: POSTGRES_CONN
     metrics:
-      - name: product_count
+      - name: template_count
         helpString: products in the db
         query: select * from templates
         time: 10

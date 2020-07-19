@@ -3,8 +3,10 @@ package query
 import (
 	"context"
 	"encoding/json"
+	"os"
 
 	"github.com/mongodb/mongo-tools-common/bsonutil"
+	"github.com/pkg/errors"
 	"github.com/yolossn/query2metric/pkg/config"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -16,7 +18,11 @@ type mongoQuery struct {
 }
 
 func NewMongoConn(connnectionURL string) (CountQuery, error) {
-	mongoClient, err := mongo.NewClient(options.Client().ApplyURI(connnectionURL))
+	connnectionString := os.Getenv(connnectionURL)
+	if connnectionString == "" {
+		return nil, errors.New("connnectionString is empty")
+	}
+	mongoClient, err := mongo.NewClient(options.Client().ApplyURI(connnectionString))
 	if err != nil {
 		return nil, err
 	}
