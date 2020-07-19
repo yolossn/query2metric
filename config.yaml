@@ -22,4 +22,8 @@ connections:
       - name: template_count
         helpString: products in the db
         query: select * from templates
-        time: 10
+        time: 2
+      - name: active_template_count
+        helpString: products in the db
+        query: error
+        time: 4

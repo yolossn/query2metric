@@ -31,8 +31,15 @@ func NewSQLQuery(connnectionURL string) (CountQuery, error) {
 }
 
 func (s *sqlQuery) Count(metric config.Metric) (int64, error) {
+	if metric.Query == "" {
+		return 0, errors.New("Query is empty")
+	}
+
 	countQuery := fmt.Sprintf("select count(*) from (%s) as count_query", metric.Query)
-	row, _ := s.db.Query(countQuery)
+	row, err := s.db.Query(countQuery)
+	if err != nil {
+		return 0, errors.Wrap(err, "Error running query")
+	}
 	defer row.Close()
 	var out int64
 	if row.Next() {
