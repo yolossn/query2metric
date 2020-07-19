@@ -1,7 +1,6 @@
 package scheduler
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -14,6 +13,8 @@ type Scheduler struct {
 }
 
 func (s Scheduler) Start() error {
+	errorChan := make(chan bool, 1)
+	successChan := make(chan bool, 1)
 	for _, conn := range s.conf.Connections {
 		var dbConnection query.CountQuery
 		var err error
@@ -43,13 +44,17 @@ func (s Scheduler) Start() error {
 			)
 			prometheus.MustRegister(gaugeMetric)
 			ticker := time.NewTicker(time.Duration(metric.Time) * time.Second)
-			run(ticker, gaugeMetric, dbConnection, metric)
+			run(ticker, gaugeMetric, dbConnection, metric, successChan, errorChan)
 		}
 	}
+
+	go errorCounter(errorChan)
+	go successCounter(successChan)
+
 	return nil
 }
 
-func run(tick *time.Ticker, gauge prometheus.Gauge, quer query.CountQuery, metric config.Metric) {
+func run(tick *time.Ticker, gauge prometheus.Gauge, quer query.CountQuery, metric config.Metric, successChan, errorChan chan bool) {
 
 	go func() {
 		for {
@@ -57,9 +62,10 @@ func run(tick *time.Ticker, gauge prometheus.Gauge, quer query.CountQuery, metri
 			case <-tick.C:
 				out, err := quer.Count(metric)
 				if err != nil {
-					fmt.Println(err)
+					errorChan <- true
 				} else {
 					gauge.Set(float64(out))
+					successChan <- true
 				}
 			}
 		}
@@ -68,4 +74,45 @@ func run(tick *time.Ticker, gauge prometheus.Gauge, quer query.CountQuery, metri
 
 func FromConfig(conf config.Config) Scheduler {
 	return Scheduler{conf}
+}
+
+func errorCounter(errorChan chan bool) {
+
+	errorCounter := prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Namespace: "query2metric",
+			Name:      "error_count",
+			Help:      "No of errors when converting query to metric",
+		},
+	)
+
+	prometheus.MustRegister(errorCounter)
+	for {
+		switch {
+		case <-errorChan:
+			errorCounter.Inc()
+		}
+	}
+
+}
+
+func successCounter(successChan chan bool) {
+
+	successCounter := prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Namespace: "query2metric",
+			Name:      "success_count",
+			Help:      "No of successful queries coverted to metrics",
+		},
+	)
+
+	prometheus.MustRegister(successCounter)
+
+	for {
+		switch {
+		case <-successChan:
+			successCounter.Inc()
+		}
+	}
+
 }
