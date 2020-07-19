@@ -20,7 +20,7 @@ type sqlQuery struct {
 func NewSQLQuery(connnectionURL string) (CountQuery, error) {
 	connnectionString := os.Getenv(connnectionURL)
 	if connnectionString == "" {
-		return nil, errors.New("connnectionString is empty")
+		return nil, ENV_NOT_SET
 	}
 	db, err := dburl.Open(connnectionString)
 	if err != nil {
