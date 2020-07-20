@@ -1,7 +1,7 @@
 connections:
   - name: mongodb1
     type: MONGO
-    connectionStringFromEnv: MONGO_CONN
+    connectionStringFromEnv: TEST_MONGO_CONN
     metrics:
       - name: active_user_count
         helpString: users in the product
@@ -17,13 +17,9 @@ connections:
         time: 120
   - name: postgres1
     type: SQL
-    connectionStringFromEnv: POSTGRES_CONN
+    connectionStringFromEnv: TEST_SQL_CONN
     metrics:
       - name: template_count
         helpString: products in the db
-        query: select * from templates
+        query: select * from queries
         time: 2
-      - name: active_template_count
-        helpString: products in the db
-        query: error
-        time: 4
