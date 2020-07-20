@@ -19,14 +19,16 @@ type Metric struct {
 	Time       int64  `yaml:"time"`
 }
 
+type Connection struct {
+	Name             string   `yaml:"name"`
+	Type             string   `yaml:"type"`
+	Subtype          string   `yaml:"subtype"`
+	ConnectionString string   `yaml:"connectionStringFromEnv"`
+	Metrics          []Metric `yaml:"metrics"`
+}
+
 type Config struct {
-	Connections []struct {
-		Name             string   `yaml:"name"`
-		Type             string   `yaml:"type"`
-		Subtype          string   `yaml:"subtype"`
-		ConnectionString string   `yaml:"connectionStringFromEnv"`
-		Metrics          []Metric `yaml:"metrics"`
-	} `yaml:"connections"`
+	Connections []Connection `yaml:"connections"`
 }
 
 func FromFile(file string) (*Config, error) {

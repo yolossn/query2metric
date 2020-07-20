@@ -20,29 +20,30 @@ type mongoQuery struct {
 func NewMongoConn(connnectionURL string) (CountQuery, error) {
 	connnectionString := os.Getenv(connnectionURL)
 	if connnectionString == "" {
-		return nil, errors.New("connnectionString is empty")
+		return nil, ENV_NOT_SET
 	}
+
+	ctx := context.Background()
+
 	mongoClient, err := mongo.NewClient(options.Client().ApplyURI(connnectionString))
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "Connection error")
 	}
+
+	err = mongoClient.Connect(ctx)
+	if err != nil {
+		return nil, errors.Wrap(err, "Connection error")
+	}
+
 	return &mongoQuery{connnectionURL, mongoClient}, err
 }
 
 func (m *mongoQuery) Count(metric config.Metric) (int64, error) {
 
 	ctx := context.Background()
-	err := m.client.Ping(ctx, nil)
-	if err != nil {
-		err = m.client.Connect(ctx)
-		if err != nil {
-			return 0, err
-		}
-	}
-
 	query := map[string]interface{}{}
 	if metric.Query != "" {
-		err = json.Unmarshal([]byte(metric.Query), &query)
+		err := json.Unmarshal([]byte(metric.Query), &query)
 		if err != nil {
 			return 0, err
 		}
