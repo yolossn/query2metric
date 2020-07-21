@@ -1,10 +1,10 @@
 package main
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	log "github.com/sirupsen/logrus"
 	"github.com/yolossn/query2metric/pkg/config"
 	"github.com/yolossn/query2metric/pkg/scheduler"
 )
@@ -22,6 +22,6 @@ func main() {
 	}
 
 	http.Handle("/metrics", promhttp.Handler())
-	http.ListenAndServe(":8090", nil)
+	log.Fatal(http.ListenAndServe(":8090", nil))
 
 }

@@ -11,9 +11,11 @@ require (
 	github.com/pkg/errors v0.8.1
 	github.com/prometheus/client_golang v1.4.0
 	github.com/prometheus/client_model v0.2.0
+	github.com/sirupsen/logrus v1.4.2
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/stretchr/testify v1.4.0
 	github.com/xo/dburl v0.0.0-20200124232849-e9ec94f52bc3
 	go.mongodb.org/mongo-driver v1.3.5
+	go.uber.org/zap v1.15.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0
 )
