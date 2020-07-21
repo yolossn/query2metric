@@ -1,8 +1,8 @@
 <h1 align="center">query2metric</h1>
 <p align="center">A tool to run db queries in defined frequency and expose the value as prometheus metrics.</p>
- 
-
-
+<p align="center">
+    <img src="https://github.com/yolossn/query2metric/blob/docker_example/images/gopher.png" height="200px"/>
+</p>
 
 ## Why ?
 
@@ -105,6 +105,11 @@ prometheus dashboard: [localhost:9090/graph](localhost:9090/graph).
 grafana dashboard: [http://localhost:3000/d/qqTN2unMk/example?orgId=1](http://localhost:3000/d/qqTN2unMk/example?orgId=1).
 
 Example Output:
+
 <p align="center">
   <img width="720" height="354" src="https://github.com/yolossn/query2metric/blob/master/images/grafana.png">
 </p>
+
+## Credits
+
+- Logo credit [gopherize.me](gopherize.me)
