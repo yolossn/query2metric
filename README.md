@@ -6,7 +6,7 @@
 
 ## Why ?
 
-Product metrics play an important role in understanding product adoption and historic metrics helps answer many questions about a product (for eg: which day of the week do I get the most signups). One common things is that most of these metrics are extracted by querying the databases. The tool takes queries and time frequency as configuration and runs the queries in the specified intervals and exposes the output as prometheus metrics.
+Product metrics play an important role in understanding product adoption and historic metrics helps answer many questions about a product (for eg: which day of the week do I get the most signups). One common thing is that most of these metrics are extracted by querying the databases. The tool takes queries and time frequency as configuration and runs the queries in the specified intervals and exposes the output as prometheus metrics.
 
 ## Example
 
