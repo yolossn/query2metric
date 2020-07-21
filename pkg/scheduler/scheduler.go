@@ -3,6 +3,7 @@ package scheduler
 import (
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/prometheus/client_golang/prometheus"
 	log "github.com/sirupsen/logrus"
 	"github.com/yolossn/query2metric/pkg/config"
@@ -48,7 +49,10 @@ func (s Scheduler) Start() error {
 					Help:      metric.HelpString,
 				},
 			)
-			prometheus.MustRegister(gaugeMetric)
+			err = prometheus.Register(gaugeMetric)
+			if err != nil {
+				return errors.Wrap(err, "Error registering metric")
+			}
 			ticker := time.NewTicker(time.Duration(metric.Time) * time.Second)
 			run(ticker, gaugeMetric, dbConnection, metric, successChan, errorChan)
 		}
