@@ -1,6 +1,8 @@
-# query2metric
+<h1 align="center">query2metric</h1>
+<p align="center">A tool to run db queries in defined frequency and expose the value as prometheus metrics.</p>
+ 
 
-A tool to run db queries in defined frequency and expose the value as prometheus metric
+
 
 ## Why ?
 
@@ -48,9 +50,11 @@ Along with the metrics defined, the success and failure count of queries are als
 `query2metric_success_count` - No of successful queries coverted to metrics
 `query2metric_error_count` - No of errors when converting query to metric
 
+Note: Errors can occur due to invalid queries or connection issues to the db, one can use the logs to debug the issues.
+
 ## How to use ?
 
-At present the tool supports mongo and sql queries. Just create a config.yaml
+At present the tool supports mongo and sql queries. Just create a config.yaml file and run the code.
 
 ### Mongo
 
@@ -94,12 +98,13 @@ docker-compose.yaml
 
 > docker-compose up
 
-Output
+metrics output: [localhost:8090/metrics](localhost:8090/metrics).
 
-metrics output: [localhost:8090/metrics](localhost:8090/metrics)
-prometheus dashboard: [localhost:9090/graph](localhost:9090/graph)
-grafana dashboard: [http://localhost:3000/d/qqTN2unMk/example?orgId=1](http://localhost:3000/d/qqTN2unMk/example?orgId=1)
+prometheus dashboard: [localhost:9090/graph](localhost:9090/graph).
 
+grafana dashboard: [http://localhost:3000/d/qqTN2unMk/example?orgId=1](http://localhost:3000/d/qqTN2unMk/example?orgId=1).
+
+Example Output:
 <p align="center">
-  <img width="720" height="354" src="https://github.com/yolossn/query2metric/blob/docker_example/images/grafana.png">
+  <img width="720" height="354" src="https://github.com/yolossn/query2metric/blob/master/images/grafana.png">
 </p>
