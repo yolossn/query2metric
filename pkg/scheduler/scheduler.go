@@ -4,9 +4,15 @@ import (
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
+	log "github.com/sirupsen/logrus"
 	"github.com/yolossn/query2metric/pkg/config"
 	"github.com/yolossn/query2metric/pkg/query"
 )
+
+func init() {
+	log.SetFormatter(&log.JSONFormatter{})
+	log.SetLevel(log.DebugLevel)
+}
 
 type Scheduler struct {
 	conf config.Config
@@ -63,9 +69,11 @@ func run(tick *time.Ticker, gauge prometheus.Gauge, quer query.CountQuery, metri
 				out, err := quer.Count(metric)
 				if err != nil {
 					errorChan <- true
+					log.WithFields(log.Fields{"db": metric.Database, "metric": metric.Name, "query": metric.Query}).Error(err)
 				} else {
 					gauge.Set(float64(out))
 					successChan <- true
+					log.WithFields(log.Fields{"db": metric.Database, "metric": metric.Name, "query": metric.Query}).Debug("success")
 				}
 			}
 		}
