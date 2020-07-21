@@ -1,7 +1,7 @@
 <h1 align="center">query2metric</h1>
-<p align="center">A tool to run db queries in defined frequency and expose the value as prometheus metrics.</p>
+<p align="center">A tool to run db queries in defined frequency and expose the count as prometheus metrics.</p>
 <p align="center">
-    <img src="https://github.com/yolossn/query2metric/blob/docker_example/images/gopher.png" height="200px"/>
+    <img src="https://github.com/yolossn/query2metric/blob/master/images/gopher.png" height="200px"/>
 </p>
 
 ## Why ?
