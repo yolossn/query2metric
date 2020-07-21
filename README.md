@@ -100,11 +100,11 @@ docker-compose.yaml
 
 > docker-compose up
 
-metrics output: [localhost:8090/metrics](localhost:8090/metrics).
+metrics output: [localhost:8090/metrics](http://localhost:8090/metrics).
 
-prometheus dashboard: [localhost:9090/graph](localhost:9090/graph).
+prometheus dashboard: [localhost:9090/graph](http://localhost:9090/graph).
 
-grafana dashboard: [http://localhost:3000/d/qqTN2unMk/example?orgId=1](http://localhost:3000/d/qqTN2unMk/example?orgId=1).
+grafana dashboard: [localhost:3000/d/qqTN2unMk/example?orgId=1](http://localhost:3000/d/qqTN2unMk/example?orgId=1).
 
 Example Output:
 
