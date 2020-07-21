@@ -5,14 +5,14 @@ connections:
     metrics:
       - name: active_user_count
         helpString: users in the product
-        database: yolo_db
-        collection: user
+        database: test
+        collection: test
         query: '{"is_active":true}'
-        time: 60
+        time: 10
       - name: total_user_count
         helpString: users in the product
-        database: yolo_db
-        collection: user
+        database: test
+        collection: test
         query: ""
         time: 120
   - name: postgres1
