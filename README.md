@@ -47,8 +47,10 @@ connections:
 ```
 
 Along with the metrics defined, the success and failure count of queries are also exposed as prometheus metrics.
-`query2metric_success_count` - No of successful queries coverted to metrics
-`query2metric_error_count` - No of errors when converting query to metric
+
+`query2metric_success_count` - No of successful queries coverted to metrics.
+
+`query2metric_error_count` - No of errors when converting query to metric.
 
 Note: Errors can occur due to invalid queries or connection issues to the db, one can use the logs to debug the issues.
 
